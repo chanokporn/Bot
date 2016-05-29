@@ -39,10 +39,10 @@ app.post('/webhook/', function (req, res) {
         ans = sum / text.length
         sendTextMessage(sender, ans)
       }
-      text = event.message.text
-      // Handle a text message from this sender
-      console.log(text)
-      sendTextMessage(sender, text)
+      // text = event.message.text
+      // // Handle a text message from this sender
+      // console.log(text)
+      // sendTextMessage(sender, text)
     }
   }
   res.sendStatus(200)
