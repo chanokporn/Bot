@@ -22,10 +22,27 @@ app.post('/webhook/', function (req, res) {
     event = req.body.entry[0].messaging[i]
     sender = event.sender.id
     if (event.message && event.message.text) {
+      var text = event.message.text.split(' ')
+      if (text[0] === 'sum') {
+        var ans = parseInt(text[1], 0) + parseInt(text[2], 0)
+        sendTextMessage(sender, ans)
+      } else if (text[0] === 'max') {
+        ans = parseInt(text[1], 0) > parseInt(text[2], 0) ? parseInt(text[1], 0) : parseInt(text[2], 0)
+        sendTextMessage(sender, ans)
+      } else if (text[0] === 'min') {
+        ans = parseInt(text[1], 0) < parseInt(text[2], 0) ? parseInt(text[1], 0) : parseInt(text[2], 0)
+        sendTextMessage(sender, ans)
+      } else if (text[0] === 'avg') {
+        text.splice(0, 1)
+        var sum = text.reduce((prev, curr) => prev + parseInt(curr, 0), 0)
+        console.log(sum)
+        ans = sum / text.length
+        sendTextMessage(sender, ans)
+      }
       text = event.message.text
       // Handle a text message from this sender
       console.log(text)
-      sendTextMessage(sender,text)
+      sendTextMessage(sender, text)
     }
   }
   res.sendStatus(200)
